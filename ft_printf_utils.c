@@ -55,7 +55,7 @@ int	fill(int width, char c)
 	return (count);
 }
 
-int	print_char(t_fmt *fmt)
+void	print_char(t_fmt *fmt)
 {
 	int c;
 
@@ -159,6 +159,7 @@ void	print_nbr(t_fmt *fmt)
 	if (nbr < 0)
 		str++;
 	strlen = ft_strlen(str);
+	numzeros = 0;
 	if (fmt->precision > strlen)
 		numzeros = fmt->precision - strlen;
 	fillwidth = ' ';
