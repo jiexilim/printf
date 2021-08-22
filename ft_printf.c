@@ -24,3 +24,8 @@ int	ft_printf(const char *format, ...)
 	free(fmt);
 	return (output_len);
 }
+
+int main()
+{
+	ft_printf("%07i", -54);
+}

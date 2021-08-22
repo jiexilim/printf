@@ -237,16 +237,16 @@ void	print_nbr(t_fmt *fmt)
 	// 	fmt->output_len += write(1, "-", 1);
 	// if (fmt->plus && nbr >= 0 && fmt->zero)
 	// 	fmt->output_len += write(1, "+", 1);
-	if (!fmt->minus)
+	if (!fmt->minus && !fmt->zero)
 		fmt->output_len += fill(fmt->width, fillwidth);
-	// if (nbr < 0 && !fmt->zero)
 	if (nbr < 0)
 		fmt->output_len += write(1, "-", 1);
-	// if (fmt->plus && nbr >= 0 && !fmt->zero)
 	else if (fmt->plus && nbr >= 0)
 		fmt->output_len += write(1, "+", 1);
 	else if (fmt->space && nbr >= 0)
 		fmt->output_len += write(1, " ", 1);
+	if (!fmt->minus && fmt->zero)
+		fmt->output_len += fill(fmt->width, fillwidth);
 	fmt->output_len += fill(fmt->precision, '0');
 	fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
