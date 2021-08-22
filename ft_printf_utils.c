@@ -155,62 +155,34 @@ void	print_ptr(t_fmt *fmt)
 	free(ptr);
 }
 
-// void	print_nbr(t_fmt *fmt)
-// {
-// 	int		nbr;
-// 	char	*str;
-// 	int		strlen;
-// 	int		numzeros;
-// 	char	fillwidth;
+void	outputint(t_fmt *fmt, char *str, int strlen, int nbr)
+{
+	char	fillwidth;
 
-// 	nbr = va_arg(fmt->args, int);
-// 	if (nbr < -2147483648 || nbr > 2147483647)
-// 		nbr = 0;
-// 	if (nbr == -2147483648)
-// 		str = itoa_base((long) nbr * -1, "0123456789");
-// 	else if (nbr < 0)
-// 		str = ft_itoa(-nbr);
-// 	else
-// 		str = ft_itoa(nbr);
-// 	strlen = ft_strlen(str);
-// 	numzeros = 0;
-// 	if ((fmt->dot && !fmt->precision && !nbr))
-// 		strlen = 0;
-// 	if (fmt->precision > strlen)
-// 		numzeros = fmt->precision - strlen;
-// 	fillwidth = ' ';
-// 	if (!fmt->dot && fmt->zero)
-// 		fillwidth = '0';
-// 	if (fmt->dot)
-// 		fmt->zero = 0;
-// 	if (nbr < 0 && fmt->zero)
-// 		fmt->output_len += write(1, "-", 1);
-// 	if (fmt->plus && nbr >= 0 && fmt->zero)
-// 		fmt->output_len += write(1, "+", 1);
-// 	if (!fmt->minus)
-// 		fmt->output_len += fill(fmt->width - strlen - numzeros
-// 				- (nbr < 0 || fmt->plus), fillwidth);
-// 	if (nbr < 0 && !fmt->zero)
-// 		fmt->output_len += write(1, "-", 1);
-// 	if (fmt->plus && nbr >= 0 && !fmt->zero)
-// 		fmt->output_len += write(1, "+", 1);
-// 	else if (fmt->space && nbr >= 0)
-// 		fmt->output_len += write(1, " ", 1);
-// 	fmt->output_len += fill(numzeros, '0');
-// 	if (!(fmt->dot && !fmt->precision && !nbr))
-// 		fmt->output_len += write(1, str, strlen);
-// 	if (fmt->minus)
-// 		fmt->output_len += fill(fmt->width - strlen - numzeros
-// 				- (nbr < 0 || fmt->plus || fmt->space), fillwidth);
-// 	free(str);
-// }
+	fillwidth = ' ';
+	if (fmt->zero)
+		fillwidth = '0';
+	if (!fmt->minus && !fmt->zero)
+		fmt->output_len += fill(fmt->width, fillwidth);
+	if (nbr < 0)
+		fmt->output_len += write(1, "-", 1);
+	else if (fmt->plus && nbr >= 0)
+		fmt->output_len += write(1, "+", 1);
+	else if (fmt->space && nbr >= 0)
+		fmt->output_len += write(1, " ", 1);
+	if (!fmt->minus && fmt->zero)
+		fmt->output_len += fill(fmt->width, fillwidth);
+	fmt->output_len += fill(fmt->precision, '0');
+	fmt->output_len += write(1, str, strlen);
+	if (fmt->minus)
+		fmt->output_len += fill(fmt->width, fillwidth);
+}
 
 void	print_nbr(t_fmt *fmt)
 {
 	int		nbr;
 	char	*str;
 	int		strlen;
-	char	fillwidth;
 
 	nbr = va_arg(fmt->args, int);
 	if (nbr < -2147483648 || nbr > 2147483647)
@@ -229,28 +201,24 @@ void	print_nbr(t_fmt *fmt)
 	else
 		fmt->precision = 0;
 	fmt->width = fmt->width - strlen - fmt->precision - (nbr < 0 || fmt->plus || fmt->space);
-	
-	fillwidth = ' ';
-	if (fmt->zero)
-		fillwidth = '0';
-	// if (nbr < 0 && fmt->zero)
+	outputint(fmt, str, strlen, nbr);
+	// fillwidth = ' ';
+	// if (fmt->zero)
+	// 	fillwidth = '0';
+	// if (!fmt->minus && !fmt->zero)
+	// 	fmt->output_len += fill(fmt->width, fillwidth);
+	// if (nbr < 0)
 	// 	fmt->output_len += write(1, "-", 1);
-	// if (fmt->plus && nbr >= 0 && fmt->zero)
+	// else if (fmt->plus && nbr >= 0)
 	// 	fmt->output_len += write(1, "+", 1);
-	if (!fmt->minus && !fmt->zero)
-		fmt->output_len += fill(fmt->width, fillwidth);
-	if (nbr < 0)
-		fmt->output_len += write(1, "-", 1);
-	else if (fmt->plus && nbr >= 0)
-		fmt->output_len += write(1, "+", 1);
-	else if (fmt->space && nbr >= 0)
-		fmt->output_len += write(1, " ", 1);
-	if (!fmt->minus && fmt->zero)
-		fmt->output_len += fill(fmt->width, fillwidth);
-	fmt->output_len += fill(fmt->precision, '0');
-	fmt->output_len += write(1, str, strlen);
-	if (fmt->minus)
-		fmt->output_len += fill(fmt->width, fillwidth);
+	// else if (fmt->space && nbr >= 0)
+	// 	fmt->output_len += write(1, " ", 1);
+	// if (!fmt->minus && fmt->zero)
+	// 	fmt->output_len += fill(fmt->width, fillwidth);
+	// fmt->output_len += fill(fmt->precision, '0');
+	// fmt->output_len += write(1, str, strlen);
+	// if (fmt->minus)
+	// 	fmt->output_len += fill(fmt->width, fillwidth);
 	free(str);
 }
 
