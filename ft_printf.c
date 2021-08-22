@@ -26,11 +26,11 @@ int		ft_printf(const char *format, ...)
 	return (output_len);
 }
 
-int main()
-{
-	ft_printf("%+07i", 54);
+// int main()
+// {
+// 	ft_printf("%+07i", 54);
 
 	
-	printf("\n");
-	return (0);
-}
+// 	printf("\n");
+// 	return (0);
+// }
