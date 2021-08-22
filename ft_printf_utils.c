@@ -78,16 +78,16 @@ void	print_str(t_fmt *fmt)
 		str = "(null)";
 	strlen = ft_strlen(str);
 	if (fmt->precision > strlen || !fmt->dot)
-		numspaces = strlen;
+		fmt->width = fmt->width - strlen;
 	else
-		numspaces = fmt->precision;
+		fmt->width = fmt->width - fmt->precision;
 	if (!fmt->minus && !fmt->zero)
-		fmt->output_len += fill(fmt->width - numspaces, ' ');
+		fmt->output_len += fill(fmt->width, ' ');
 	if (!fmt->minus && fmt->zero)
-		fmt->output_len += fill(fmt->width - numspaces, '0');
+		fmt->output_len += fill(fmt->width, '0');
 	fmt->output_len += write(1, str, numspaces);
 	if (fmt->minus)
-		fmt->output_len += fill(fmt->width - numspaces, ' ');
+		fmt->output_len += fill(fmt->width, ' ');
 }
 
 static size_t	arr_size(unsigned long nbr, unsigned long radix)
@@ -312,10 +312,7 @@ void	print_hex(t_fmt *fmt, char x_type)
 		fmt->precision = fmt->precision - arrlen;
 	else
 		fmt->precision = 0;
-	// if (fmt->width > (arrlen + fmt->precision + (fmt->hash * 2)))
-		fmt->width = fmt->width - arrlen - fmt->precision - (fmt->hash * 2);
-	// else
-	// 	fmt->width = 0;
+	fmt->width = fmt->width - arrlen - fmt->precision - (fmt->hash * 2);
 	outputhex(fmt, hex_arr, arrlen, x_type);
 	free(hex_arr);
 }
