@@ -26,13 +26,11 @@ int		ft_printf(const char *format, ...)
 	return (output_len);
 }
 
-// int main()
-// {
-// 	ft_printf("%08.3i", 8375);
+int main()
+{
+	ft_printf("%+07i", 54);
+
 	
-// 	printf("\n");
-// 	ft_printf("%08.3i", -8375);
-	
-// 	printf("\n");
-// 	return (0);
-// }
+	printf("\n");
+	return (0);
+}
