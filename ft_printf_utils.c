@@ -57,7 +57,7 @@ int	fill(int width, char c)
 
 void	print_char(t_fmt *fmt)
 {
-	int c;
+	int	c;
 
 	c = va_arg(fmt->args, int);
 	if (fmt->minus)
@@ -65,7 +65,6 @@ void	print_char(t_fmt *fmt)
 	fmt->output_len += fill(fmt->width - 1, ' ');
 	if (!fmt->minus)
 		fmt->output_len += write(1, &c, 1);
-
 }
 
 void	print_str(t_fmt *fmt)
@@ -91,7 +90,6 @@ void	print_str(t_fmt *fmt)
 		fmt->output_len += fill(fmt->width - numspaces, ' ');
 }
 
-
 static size_t	arr_size(unsigned long nbr, unsigned long radix)
 {
 	size_t	size;
@@ -108,8 +106,9 @@ static size_t	arr_size(unsigned long nbr, unsigned long radix)
 char	*itoa_base(unsigned long long nbr, char *base)
 {
 	int		radix;
-	char	*arr_base;
 	size_t	size;
+	char	*arr_base;
+
 	radix = ft_strlen(base);
 	size = arr_size(nbr, radix);
 	arr_base = malloc(size + 1);
@@ -135,11 +134,6 @@ void	print_ptr(t_fmt *fmt)
 	int		numzeros;
 
 	str = va_arg(fmt->args, char *);
-	// if (!str)
-	// {
-	// 	fmt->output_len += write(1, "(nil)", 5);
-	// 	return ;
-	// }
 	ptr = itoa_base((unsigned long) str, "0123456789abcdef");
 	ptrlen = ft_strlen(ptr);
 	if ((fmt->dot && !fmt->precision && !str))
@@ -151,8 +145,8 @@ void	print_ptr(t_fmt *fmt)
 		fmt->output_len += fill(fmt->width - ptrlen - numzeros - 2, ' ');
 	fmt->output_len += (write(1, "0x", 2));
 	fmt->output_len += fill(numzeros, '0');
-	if (!(fmt->dot && !fmt->precision && !str))
-		fmt->output_len += write(1, ptr, ptrlen);
+	// if (!(fmt->dot && !fmt->precision && !str))
+	fmt->output_len += write(1, ptr, ptrlen);
 	if (fmt->width > ptrlen && fmt->minus)
 		fmt->output_len += fill(fmt->width - ptrlen - numzeros - 2, ' ');
 	free(ptr);

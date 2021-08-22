@@ -1,12 +1,11 @@
 #include "libft/libft.h"
 #include "ft_printf.h"
 
-
-int		ft_printf(const char *format, ...)
+int	ft_printf(const char *format, ...)
 {
 	t_fmt	*fmt;
 	int		output_len;
-	
+
 	fmt = malloc(sizeof(t_fmt));
 	va_start(fmt->args, format);
 	fmt->output_len = 0;
@@ -16,7 +15,7 @@ int		ft_printf(const char *format, ...)
 		{
 			reset(fmt);
 			parse((char **) &format, fmt);
-			continue;
+			continue ;
 		}
 		fmt->output_len += write(1, format++, 1);
 	}
@@ -25,18 +24,3 @@ int		ft_printf(const char *format, ...)
 	free(fmt);
 	return (output_len);
 }
-
-// int main()
-// {
-// 	int i = ft_printf("%.i", 0);
-//        printf("a\n");
-//        int y = ft_printf("%5.0i", 0);
-//        printf("a\n");
-//        ft_printf("%5.i", 0);
-//       printf("a\n");
-//       ft_printf("%-5.0i", 0);
-//       printf("a\n");
-// 	  printf("%d\n", i);
-// 	  printf("%d\n", y);
-// 	return (0);
-// }
