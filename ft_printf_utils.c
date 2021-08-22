@@ -146,6 +146,7 @@ void	print_ptr(t_fmt *fmt)
 	fmt->output_len += (write(1, "0x", 2) + write(1, ptr, ptrlen));
 	if (fmt->width > ptrlen && fmt->minus)
 		fmt->output_len += fill(fmt->width - ptrlen - 2, ' ');
+	free(ptr);
 }
 
 void	print_nbr(t_fmt *fmt)
@@ -175,6 +176,7 @@ void	print_nbr(t_fmt *fmt)
 	fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
 		fmt->output_len += fill(fmt->width - strlen - numzeros - (nbr < 0 || fmt->plus), fillwidth);
+	free(str);
 }
 
 void	print_ui(t_fmt *fmt)
