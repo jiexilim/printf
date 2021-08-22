@@ -1,10 +1,5 @@
 #ifndef FT_PRINTF_H
 # define FT_PRINTF_H
-#include "libft/libft.h"
-# include <stdarg.h>
-# include <unistd.h>
-
-# define FD_STDOUT 1
 
 typedef struct	s_fmt
 {
@@ -21,7 +16,5 @@ typedef struct	s_fmt
 }	t_fmt;
 
 int		ft_printf(const char *format, ...);
-void	reset(t_fmt *fmt);
-void	parse(char **format, t_fmt *fmt);
 
 #endif
