@@ -231,7 +231,7 @@ void	print_nbr(t_fmt *fmt)
 	fmt->width = fmt->width - strlen - fmt->precision - (nbr < 0 || fmt->plus || fmt->space);
 	
 	fillwidth = ' ';
-	if (!fmt->dot && fmt->zero)
+	if (fmt->zero)
 		fillwidth = '0';
 	if (nbr < 0 && fmt->zero)
 		fmt->output_len += write(1, "-", 1);
