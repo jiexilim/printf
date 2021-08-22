@@ -142,6 +142,8 @@ void	print_ptr(t_fmt *fmt)
 	// }
 	ptr = itoa_base((unsigned long) str, "0123456789abcdef");
 	ptrlen = ft_strlen(ptr);
+	if ((fmt->dot && !fmt->precision && !str))
+		ptrlen = 0;
 	numzeros = 0;
 	if (fmt->precision > ptrlen)
 		numzeros = fmt->precision - ptrlen;
@@ -149,7 +151,7 @@ void	print_ptr(t_fmt *fmt)
 		fmt->output_len += fill(fmt->width - ptrlen - numzeros - 2, ' ');
 	fmt->output_len += (write(1, "0x", 2));
 	fmt->output_len += fill(numzeros, '0');
-	if (str)
+	if (!(fmt->dot && !fmt->precision && !str))
 		fmt->output_len += write(1, ptr, ptrlen);
 	if (fmt->width > ptrlen && fmt->minus)
 		fmt->output_len += fill(fmt->width - ptrlen - numzeros - 2, ' ');
