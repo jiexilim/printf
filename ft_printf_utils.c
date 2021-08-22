@@ -77,9 +77,10 @@ void	print_str(t_fmt *fmt)
 	str = va_arg(fmt->args, char *);
 	if (!str)
 	{
-		str = "(null)";
-		if (fmt->precision < 6)
-			fmt->precision = 0;
+		write(1, "", 1);
+		return ;
+		// if (fmt->precision < 6)
+		// 	fmt->precision = 0;
 	}
 	strlen = ft_strlen(str);
 	if (fmt->precision > strlen || !fmt->dot)
