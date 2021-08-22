@@ -247,22 +247,22 @@ void	print_hex(t_fmt *fmt, char x_type)
 		arrlen = 0;
 	numzeros = 0;
 	if (fmt->precision > arrlen)
-		fmt->precisio = fmt->precision - arrlen;
+		fmt->precision = fmt->precision - arrlen;
 	else
-		fmt->precisio = 0;
+		fmt->precision = 0;
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
 	if (!fmt->minus)
 		fmt->output_len += fill(fmt->width - arrlen
-				- fmt->precisio - (fmt->hash * 2), fillwidth);
+				- fmt->precision - (fmt->hash * 2), fillwidth);
 	if (fmt->hash && nbr)
 		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
 	fmt->output_len += fill(fmt->precisio, '0');
 	fmt->output_len += write(1, hex_arr, arrlen);
 	if (fmt->minus)
 		fmt->output_len += fill(fmt->width - arrlen
-				- fmt->precisio - (fmt->hash * 2), fillwidth);
+				- fmt->precision - (fmt->hash * 2), fillwidth);
 	free(hex_arr);
 }
 
