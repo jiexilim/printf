@@ -181,10 +181,12 @@ void	print_nbr(t_fmt *fmt)
 		fmt->output_len += write(1, "-", 1);
 	if (fmt->plus && nbr >= 0)
 		fmt->output_len += write(1, "+", 1);
+	else if (fmt->space && nbr >= 0)
+		fmt->output_len += write(1, " ", 1);
 	fmt->output_len += fill(numzeros, '0');
 	fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
-		fmt->output_len += fill(fmt->width - strlen - numzeros - (nbr < 0 || fmt->plus), fillwidth);
+		fmt->output_len += fill(fmt->width - strlen - numzeros - (nbr < 0 || fmt->plus || fmt->space), fillwidth);
 	free(str);
 }
 
@@ -234,7 +236,7 @@ void print_hex(t_fmt *fmt, char x_type)
 		fillwidth = '0';
 	if (!fmt->minus)
 		fmt->output_len += fill(fmt->width - arrlen - numzeros - (fmt->hash * 2), fillwidth);
-	if (fmt->hash)
+	if (fmt->hash && nbr)
 		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
 	fmt->output_len += fill(numzeros, '0');
 	fmt->output_len += write(1, hex_arr, arrlen);

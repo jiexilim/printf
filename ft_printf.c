@@ -27,16 +27,14 @@ int		ft_printf(const char *format, ...)
 	return (output_len);
 }
 
-// int main()
-// {
-// 	// TEST(15, print(" %04d ", -14));
-// 	// TEST(16, print(" %05d ", -15));
-// 	// TEST(17, print(" %06d ", -16));
-// 	int i = ft_printf(" %013d ", 4294967295);
-// 	printf("\n");
-// 	int j = printf(" %013d ", 4294967295);
-// 	printf("\n");
-// 	printf("%d\n", i);
-// 	printf("%d\n", j);
-// 	return (0);
-// }
+int main()
+{
+
+	int i = ft_printf("% d", 0);
+	printf("\n");
+	int j = printf("% d", 0);
+	printf("\n");
+	printf("%d\n", i);
+	printf("%d\n", j);
+	return (0);
+}
