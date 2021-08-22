@@ -25,8 +25,8 @@ int		ft_printf(const char *format, ...)
 	return (output_len);
 }
 
-int main()
-{
-	ft_printf("%d", 3);
-	return (0);
-}
+// int main()
+// {
+// 	ft_printf("%d", 3);
+// 	return (0);
+// }
