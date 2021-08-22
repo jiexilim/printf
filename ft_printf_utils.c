@@ -208,6 +208,7 @@ void	print_ui(t_fmt *fmt)
 	fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
 		fmt->output_len += fill(fmt->width - strlen - numzeros , fillwidth);
+	free(str);
 }
 
 void print_hex(t_fmt *fmt, char x_type)
