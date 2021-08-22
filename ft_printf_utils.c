@@ -170,6 +170,8 @@ void	print_nbr(t_fmt *fmt)
 	numzeros = 0;
 	if (fmt->precision > strlen)
 		numzeros = fmt->precision - strlen;
+	else if (fmt->zero && fmt->width > strlen)
+		numzeros = fmt->width - strlen - (fmt->plus || nbr < 0);
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
