@@ -24,7 +24,10 @@ void	parse_specifier(char c, t_fmt *fmt)
 	if (ft_isdigit(c))
 	{
 		if (fmt->dot)
+		{
 			fmt->precision = (fmt->precision * 10) + (c - '0');
+			fmt->zero = 0;
+		}
 		else if (c == '0' && !fmt->width)
 			fmt->zero = 1;
 		else
@@ -226,11 +229,12 @@ void	print_nbr(t_fmt *fmt)
 	else
 		fmt->precision = 0;
 	fmt->width = fmt->width - strlen - fmt->precision - (nbr < 0 || fmt->plus || fmt->space);
+	
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
-	if (fmt->dot)
-		fmt->zero = 0;
+	// if (fmt->dot)
+	// 	fmt->zero = 0;
 	if (nbr < 0 && fmt->zero)
 		fmt->output_len += write(1, "-", 1);
 	if (fmt->plus && nbr >= 0 && fmt->zero)
