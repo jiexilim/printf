@@ -224,6 +224,8 @@ void	print_nbr(t_fmt *fmt)
 		strlen = 0;
 	if (fmt->precision > strlen)
 		fmt->precision = fmt->precision - strlen;
+	else
+		fmt->precision = 0;
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
