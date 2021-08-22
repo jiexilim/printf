@@ -28,7 +28,7 @@ void	parse_specifier(char c, t_fmt *fmt)
 			fmt->precision = (fmt->precision * 10) + (c - '0');
 			fmt->zero = 0;
 		}
-		else if (c == '0' && !fmt->width)
+		else if (c == '0' && !fmt->width && !fmt->minus)
 			fmt->zero = 1;
 		else
 			fmt->width = (fmt->width * 10) + (c - '0');
@@ -233,8 +233,6 @@ void	print_nbr(t_fmt *fmt)
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
-	// if (fmt->dot)
-	// 	fmt->zero = 0;
 	if (nbr < 0 && fmt->zero)
 		fmt->output_len += write(1, "-", 1);
 	if (fmt->plus && nbr >= 0 && fmt->zero)
