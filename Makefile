@@ -6,7 +6,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 NAME = libftprintf.a
 
-LIBFT_OBJS = $(libft/)*.o
+LIBFT_OBJS = libft/*.o
 
 all : $(NAME)
 
@@ -14,7 +14,7 @@ $(NAME) : $(OBJS) makelibft
 	ar rcs $(NAME) $(OBJS) $(LIBFT_OBJS)
 
 makelibft :
-	cd libft; make re; cd ..;
+	make -C libft/
 
 # %.c : %.o
 # 	gcc $(CFLAGS) -I $(INCLUDE) -c $< -o ${<:c=o}
@@ -22,7 +22,7 @@ makelibft :
 bonus : $(NAME)
 
 clean:
-	cd libft; make clean; cd ..;
+	make -C libft/ clean
 	rm -f $(OBJS)
 
 fclean : clean
