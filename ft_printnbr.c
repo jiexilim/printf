@@ -2,7 +2,7 @@
 #include "ft_printf.h"
 #include "ft_printf_utils.h"
 
-void	outputint(t_fmt *fmt, char *str, int strlen, int nbr)
+static void	outputint(t_fmt *fmt, char *str, int strlen, int nbr)
 {
 	char	fillwidth;
 

@@ -2,7 +2,7 @@
 #include "ft_printf.h"
 #include "ft_printf_utils.h"
 
-void	outputhex(t_fmt *fmt, char *hex_arr, int arrlen, char x_type)
+static void	outputhex(t_fmt *fmt, char *hex_arr, int arrlen, char x_type)
 {
 	char	fillwidth;
 
