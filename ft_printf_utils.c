@@ -39,7 +39,7 @@ void	parse_specifier(char c, t_fmt *fmt)
 	else if (c == '+')
 		fmt->plus = 1;
 	else if (c == '.')
-		fmt->dot = 1;	
+		fmt->dot = 1;
 }
 
 int	fill(int width, char c)
@@ -69,10 +69,10 @@ void	print_char(t_fmt *fmt)
 
 void	print_str(t_fmt *fmt)
 {
-	char *str;
-	int	strlen;
-	int	numspaces;
-	
+	char	*str;
+	int		strlen;
+	int		numspaces;
+
 	str = va_arg(fmt->args, char *);
 	if (!str)
 		str = "(null)";
@@ -136,7 +136,7 @@ void	print_ptr(t_fmt *fmt)
 	str = va_arg(fmt->args, char *);
 	ptr = itoa_base((unsigned long) str, "0123456789abcdef");
 	ptrlen = ft_strlen(ptr);
-	if ((fmt->dot && !fmt->precision && !str))
+	if (fmt->dot && !fmt->precision && !str)
 		ptrlen = 0;
 	numzeros = 0;
 	if (fmt->precision > ptrlen)
@@ -145,7 +145,6 @@ void	print_ptr(t_fmt *fmt)
 		fmt->output_len += fill(fmt->width - ptrlen - numzeros - 2, ' ');
 	fmt->output_len += (write(1, "0x", 2));
 	fmt->output_len += fill(numzeros, '0');
-	// if (!(fmt->dot && !fmt->precision && !str))
 	fmt->output_len += write(1, ptr, ptrlen);
 	if (fmt->width > ptrlen && fmt->minus)
 		fmt->output_len += fill(fmt->width - ptrlen - numzeros - 2, ' ');
@@ -154,8 +153,10 @@ void	print_ptr(t_fmt *fmt)
 
 void	print_nbr(t_fmt *fmt)
 {
-	int		nbr, strlen, numzeros;
+	int		nbr;
 	char	*str;
+	int		strlen;
+	int		numzeros;
 	char	fillwidth;
 
 	nbr = va_arg(fmt->args, int);
@@ -173,8 +174,6 @@ void	print_nbr(t_fmt *fmt)
 		strlen = 0;
 	if (fmt->precision > strlen)
 		numzeros = fmt->precision - strlen;
-	// else if (fmt->zero && fmt->width > strlen)
-	// 	numzeros = fmt->width - strlen - (fmt->plus || nbr < 0);
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
@@ -185,7 +184,8 @@ void	print_nbr(t_fmt *fmt)
 	if (fmt->plus && nbr >= 0 && fmt->zero)
 		fmt->output_len += write(1, "+", 1);
 	if (!fmt->minus)
-		fmt->output_len += fill(fmt->width - strlen - numzeros - (nbr < 0 || fmt->plus), fillwidth);
+		fmt->output_len += fill(fmt->width - strlen - numzeros
+				- (nbr < 0 || fmt->plus), fillwidth);
 	if (nbr < 0 && !fmt->zero)
 		fmt->output_len += write(1, "-", 1);
 	if (fmt->plus && nbr >= 0 && !fmt->zero)
@@ -196,22 +196,23 @@ void	print_nbr(t_fmt *fmt)
 	if (!(fmt->dot && !fmt->precision && !nbr))
 		fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
-		fmt->output_len += fill(fmt->width - strlen - numzeros - (nbr < 0 || fmt->plus || fmt->space), fillwidth);
+		fmt->output_len += fill(fmt->width - strlen - numzeros
+				- (nbr < 0 || fmt->plus || fmt->space), fillwidth);
 	free(str);
 }
 
 void	print_ui(t_fmt *fmt)
 {
-	unsigned int		nbr;
-	int		strlen, numzeros;
-	char	*str;
-	char	fillwidth;
+	unsigned int	nbr;
+	char			*str;
+	int				strlen;
+	int				numzeros;
+	char			fillwidth;
 
-	
 	nbr = va_arg(fmt->args, unsigned int);
 	str = itoa_base(nbr, "0123456789");
 	strlen = ft_strlen(str);
-	if ((fmt->dot && !fmt->precision && !nbr))
+	if (fmt->dot && !fmt->precision && !nbr)
 		strlen = 0;
 	numzeros = 0;
 	if (fmt->precision > strlen)
@@ -220,21 +221,39 @@ void	print_ui(t_fmt *fmt)
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
 	if (!fmt->minus)
-		fmt->output_len += fill(fmt->width - strlen - numzeros , fillwidth);
+		fmt->output_len += fill(fmt->width - strlen - numzeros, fillwidth);
 	fmt->output_len += fill(numzeros, '0');
-	if (!(fmt->dot && !fmt->precision && !nbr))
-		fmt->output_len += write(1, str, strlen);
+	fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
-		fmt->output_len += fill(fmt->width - strlen - numzeros , fillwidth);
+		fmt->output_len += fill(fmt->width - strlen - numzeros, fillwidth);
 	free(str);
 }
 
-void print_hex(t_fmt *fmt, char x_type)
+void	outputhex_hlpr(t_fmt *fmt, char x_type, char *hex_arr, int arrlen)
+{
+	char	fillwidth;
+
+	fillwidth = ' ';
+	if (!fmt->dot && fmt->zero)
+		fillwidth = '0';
+	if (!fmt->minus)
+		fmt->output_len += fill(fmt->width - arrlen
+				- fmt->precision - (fmt->hash * 2), fillwidth);
+	if (fmt->hash && *hex_arr)
+		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
+	fmt->output_len += fill(fmt->precision, '0');
+	fmt->output_len += write(1, hex_arr, arrlen);
+	if (fmt->minus)
+		fmt->output_len += fill(fmt->width - arrlen
+				- fmt->precision - (fmt->hash * 2), fillwidth);
+}
+
+void	print_hex(t_fmt *fmt, char x_type)
 {
 	unsigned int	nbr;
 	char			*hex_arr;
-	int		arrlen, numzeros;
-	char	fillwidth;
+	int				arrlen;
+	// char			fillwidth;
 
 	nbr = va_arg(fmt->args, unsigned int);
 	if (x_type == 'X')
@@ -242,23 +261,24 @@ void print_hex(t_fmt *fmt, char x_type)
 	else
 		hex_arr = itoa_base((unsigned long) nbr, "0123456789abcdef");
 	arrlen = ft_strlen(hex_arr);
-	if ((fmt->dot && !fmt->precision && !nbr))
+	if (fmt->dot && !fmt->precision && !nbr)
 		arrlen = 0;
-	numzeros = 0;
 	if (fmt->precision > arrlen)
-		numzeros = fmt->precision - arrlen;
-	fillwidth = ' ';
-	if (!fmt->dot && fmt->zero)
-		fillwidth = '0';
-	if (!fmt->minus)
-		fmt->output_len += fill(fmt->width - arrlen - numzeros - (fmt->hash * 2), fillwidth);
-	if (fmt->hash && nbr)
-		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
-	fmt->output_len += fill(numzeros, '0');
-	if (!(fmt->dot && !fmt->precision && !nbr))
-		fmt->output_len += write(1, hex_arr, arrlen);
-	if (fmt->minus)
-		fmt->output_len += fill(fmt->width - arrlen - numzeros - (fmt->hash * 2), fillwidth);
+		fmt->precision -= arrlen;
+	// fillwidth = ' ';
+	// if (!fmt->dot && fmt->zero)
+	// 	fillwidth = '0';
+	outputhex_hlpr(fmt, x_type, hex_arr, arrlen);
+	// if (!fmt->minus)
+	// 	fmt->output_len += fill(fmt->width - arrlen
+	// 			- fmt->precision - (fmt->hash * 2), fillwidth);
+	// if (fmt->hash && nbr)
+	// 	fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
+	// fmt->output_len += fill(fmt->precision, '0');
+	// fmt->output_len += write(1, hex_arr, arrlen);
+	// if (fmt->minus)
+	// 	fmt->output_len += fill(fmt->width - arrlen
+	// 			- fmt->precision - (fmt->hash * 2), fillwidth);
 	free(hex_arr);
 }
 
@@ -292,9 +312,8 @@ void	parse(char **format, t_fmt *fmt)
 	else if (**format == 'x')
 		print_hex(fmt, 'x');
 	else if (**format == 'X')
-		print_hex(fmt,'X');
+		print_hex(fmt, 'X');
 	else if (**format == '%')
 		print_hash(fmt);
 	(*format)++;
 }
-

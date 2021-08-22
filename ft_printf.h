@@ -21,7 +21,5 @@ typedef struct	s_fmt
 }	t_fmt;
 
 int		ft_printf(const char *format, ...);
-void	reset(t_fmt *fmt);
-void	parse(char **format, t_fmt *fmt);
 
 #endif
