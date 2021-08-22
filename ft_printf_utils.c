@@ -258,7 +258,7 @@ void	print_hex(t_fmt *fmt, char x_type)
 				- fmt->precision - (fmt->hash * 2), fillwidth);
 	if (fmt->hash && nbr)
 		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
-	fmt->output_len += fill(fmt->precisio, '0');
+	fmt->output_len += fill(fmt->precision, '0');
 	fmt->output_len += write(1, hex_arr, arrlen);
 	if (fmt->minus)
 		fmt->output_len += fill(fmt->width - arrlen
