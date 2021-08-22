@@ -206,7 +206,6 @@ void	print_nbr(t_fmt *fmt)
 	int		nbr;
 	char	*str;
 	int		strlen;
-	int		numzeros;
 	char	fillwidth;
 
 	nbr = va_arg(fmt->args, int);
@@ -219,13 +218,13 @@ void	print_nbr(t_fmt *fmt)
 	else
 		str = ft_itoa(nbr);
 	strlen = ft_strlen(str);
-	numzeros = 0;
-	if ((fmt->dot && !fmt->precision && !nbr))
+	if (fmt->dot && !fmt->precision && !nbr)
 		strlen = 0;
 	if (fmt->precision > strlen)
 		fmt->precision = fmt->precision - strlen;
 	else
 		fmt->precision = 0;
+	fmt->width = fmt->width - strlen - fmt->precision - (nbr < 0 || fmt->plus || fmt->space)
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
@@ -236,8 +235,8 @@ void	print_nbr(t_fmt *fmt)
 	if (fmt->plus && nbr >= 0 && fmt->zero)
 		fmt->output_len += write(1, "+", 1);
 	if (!fmt->minus)
-		fmt->output_len += fill(fmt->width - strlen - fmt->precision
-				- (nbr < 0 || fmt->plus), fillwidth);
+		fmt->output_len += fill(fmt->width);
+		// - strlen - fmt->precision - (nbr < 0 || fmt->plus), fillwidth);
 	if (nbr < 0 && !fmt->zero)
 		fmt->output_len += write(1, "-", 1);
 	if (fmt->plus && nbr >= 0 && !fmt->zero)
@@ -245,11 +244,10 @@ void	print_nbr(t_fmt *fmt)
 	else if (fmt->space && nbr >= 0)
 		fmt->output_len += write(1, " ", 1);
 	fmt->output_len += fill(fmt->precision, '0');
-	if (!(fmt->dot && !fmt->precision && !nbr))
-		fmt->output_len += write(1, str, strlen);
+	fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
-		fmt->output_len += fill(fmt->width - strlen - fmt->precision
-				- (nbr < 0 || fmt->plus || fmt->space), fillwidth);
+		fmt->output_len += fill(fmt->width);
+		//  - strlen - fmt->precision - (nbr < 0 || fmt->plus || fmt->space), fillwidth);
 	free(str);
 }
 
