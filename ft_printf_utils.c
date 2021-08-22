@@ -159,12 +159,14 @@ void	print_nbr(t_fmt *fmt)
 	char	fillwidth;
 
 	nbr = va_arg(fmt->args, long);
-	if (nbr < -2147483648 || nbr > 2147483647)
+	if ((int) nbr < -2147483648 || (int) nbr > 2147483647)
 		nbr = 0;
-	if (nbr < 0)
+	else if ((int) nbr == -2147483648)
 		str = itoa_base(-nbr, "0123456789");
+	else if (nbr < 0)
+		str = ft_itoa(-nbr);
 	else
-		str = itoa_base(nbr, "0123456789");	
+		str = ft_itoa(nbr);
 	strlen = ft_strlen(str);
 	numzeros = 0;
 	if (fmt->precision > strlen)
