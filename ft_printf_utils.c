@@ -143,7 +143,9 @@ void	print_ptr(t_fmt *fmt)
 	ptrlen = ft_strlen(ptr);
 	if (fmt->width > ptrlen && !fmt->minus)
 		fmt->output_len += fill(fmt->width - ptrlen - 2, ' ');
-	fmt->output_len += (write(1, "0x", 2) + write(1, ptr, ptrlen));
+	fmt->output_len += (write(1, "0x", 2));
+	if (str)
+		fmt->output_len += write(1, ptr, ptrlen);
 	if (fmt->width > ptrlen && fmt->minus)
 		fmt->output_len += fill(fmt->width - ptrlen - 2, ' ');
 	free(ptr);
@@ -156,8 +158,6 @@ void	print_nbr(t_fmt *fmt)
 	char	fillwidth;
 
 	nbr = va_arg(fmt->args, int);
-	if (fmt->dot && !fmt->precision && !nbr)
-		return ;
 	if (nbr < -2147483648 || nbr > 2147483647)
 		nbr = 0;
 	if (nbr == -2147483648)
@@ -190,7 +190,8 @@ void	print_nbr(t_fmt *fmt)
 	else if (fmt->space && nbr >= 0)
 		fmt->output_len += write(1, " ", 1);
 	fmt->output_len += fill(numzeros, '0');
-	fmt->output_len += write(1, str, strlen);
+	if (!(fmt->dot && !fmt->precision && !nbr))
+		fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
 		fmt->output_len += fill(fmt->width - strlen - numzeros - (nbr < 0 || fmt->plus || fmt->space), fillwidth);
 	free(str);
@@ -205,8 +206,6 @@ void	print_ui(t_fmt *fmt)
 
 	
 	nbr = va_arg(fmt->args, unsigned int);
-	if (fmt->dot && !fmt->precision && !nbr)
-		return ;
 	str = itoa_base(nbr, "0123456789");
 	strlen = ft_strlen(str);
 	numzeros = 0;
@@ -218,7 +217,8 @@ void	print_ui(t_fmt *fmt)
 	if (!fmt->minus)
 		fmt->output_len += fill(fmt->width - strlen - numzeros , fillwidth);
 	fmt->output_len += fill(numzeros, '0');
-	fmt->output_len += write(1, str, strlen);
+	if (!(fmt->dot && !fmt->precision && !nbr))
+		fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
 		fmt->output_len += fill(fmt->width - strlen - numzeros , fillwidth);
 	free(str);
@@ -232,8 +232,6 @@ void print_hex(t_fmt *fmt, char x_type)
 	char	fillwidth;
 
 	nbr = va_arg(fmt->args, unsigned int);
-	if (fmt->dot && !fmt->precision && !nbr)
-		return ;
 	if (x_type == 'X')
 		hex_arr = itoa_base((unsigned long) nbr, "0123456789ABCDEF");
 	else
@@ -250,7 +248,8 @@ void print_hex(t_fmt *fmt, char x_type)
 	if (fmt->hash && nbr)
 		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
 	fmt->output_len += fill(numzeros, '0');
-	fmt->output_len += write(1, hex_arr, arrlen);
+	if (!(fmt->dot && !fmt->precision && !nbr))
+		fmt->output_len += write(1, hex_arr, arrlen);
 	if (fmt->minus)
 		fmt->output_len += fill(fmt->width - arrlen - numzeros - (fmt->hash * 2), fillwidth);
 	free(hex_arr);
