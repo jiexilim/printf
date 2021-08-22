@@ -233,15 +233,17 @@ void	print_nbr(t_fmt *fmt)
 	fillwidth = ' ';
 	if (fmt->zero)
 		fillwidth = '0';
-	if (nbr < 0 && fmt->zero)
-		fmt->output_len += write(1, "-", 1);
-	if (fmt->plus && nbr >= 0 && fmt->zero)
-		fmt->output_len += write(1, "+", 1);
+	// if (nbr < 0 && fmt->zero)
+	// 	fmt->output_len += write(1, "-", 1);
+	// if (fmt->plus && nbr >= 0 && fmt->zero)
+	// 	fmt->output_len += write(1, "+", 1);
 	if (!fmt->minus)
 		fmt->output_len += fill(fmt->width, fillwidth);
-	if (nbr < 0 && !fmt->zero)
+	// if (nbr < 0 && !fmt->zero)
+	if (nbr < 0)
 		fmt->output_len += write(1, "-", 1);
-	if (fmt->plus && nbr >= 0 && !fmt->zero)
+	// if (fmt->plus && nbr >= 0 && !fmt->zero)
+	else if (fmt->plus && nbr >= 0)
 		fmt->output_len += write(1, "+", 1);
 	else if (fmt->space && nbr >= 0)
 		fmt->output_len += write(1, " ", 1);
@@ -269,7 +271,7 @@ void	print_ui(t_fmt *fmt)
 	if (fmt->precision > strlen)
 		numzeros = fmt->precision - strlen;
 	fillwidth = ' ';
-	if (!fmt->dot && fmt->zero)
+	if (fmt->zero)
 		fillwidth = '0';
 	if (!fmt->minus)
 		fmt->output_len += fill(fmt->width - strlen - numzeros, fillwidth);
@@ -285,7 +287,7 @@ void	outputhex(t_fmt *fmt, char *hex_arr, int arrlen, char x_type)
 	char	fillwidth;
 
 	fillwidth = ' ';
-	if (!fmt->dot && fmt->zero)
+	if (fmt->zero)
 		fillwidth = '0';
 	if (!fmt->minus)
 		fmt->output_len += fill(fmt->width, fillwidth);
