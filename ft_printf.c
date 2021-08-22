@@ -26,14 +26,14 @@ int		ft_printf(const char *format, ...)
 	return (output_len);
 }
 
-// int main()
-// {
-// 	ft_printf("%-5.0i", 0);
-//        printf("a");
-//        printf("\n");
-//       ft_printf("%5.p", NULL);
-//      printf("\n");
-//      ft_printf("%2.p", NULL);
-//     printf("\n");
-// 	return (0);
-// }
+int main()
+{
+	ft_printf("%2.9p\n", 1234);
+       printf("a");
+       printf("\n");
+      ft_printf("%5.p", NULL);
+     printf("\n");
+     ft_printf("%2.p", NULL);
+    printf("\n");
+	return (0);
+}

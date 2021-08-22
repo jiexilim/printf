@@ -132,6 +132,7 @@ void	print_ptr(t_fmt *fmt)
 	char	*str;
 	char	*ptr;
 	int		ptrlen;
+	int		numzeros;
 
 	str = va_arg(fmt->args, char *);
 	// if (!str)
@@ -141,13 +142,17 @@ void	print_ptr(t_fmt *fmt)
 	// }
 	ptr = itoa_base((unsigned long) str, "0123456789abcdef");
 	ptrlen = ft_strlen(ptr);
+	numzeros = 0;
+	if (fmt->precision > ptrlen)
+		numzeros = fmt->precision - ptrlen;
 	if (fmt->width > ptrlen && !fmt->minus)
-		fmt->output_len += fill(fmt->width - ptrlen - 2, ' ');
+		fmt->output_len += fill(fmt->width - ptrlen - numzeros - 2, ' ');
 	fmt->output_len += (write(1, "0x", 2));
+	fmt->output_len += fill(numzeros, '0');
 	if (str)
 		fmt->output_len += write(1, ptr, ptrlen);
 	if (fmt->width > ptrlen && fmt->minus)
-		fmt->output_len += fill(fmt->width - ptrlen - 2, ' ');
+		fmt->output_len += fill(fmt->width - ptrlen - numzeros - 2, ' ');
 	free(ptr);
 }
 
