@@ -5,11 +5,13 @@ SRCS = ./ft_printf.c ./ft_printf_utils.c ./ft_printchar.c \
 
 OBJS = $(SRCS:c=o)
 
+LIBFT_DIR = libft/
+
+LIBFT_OBJS = $(LIBFT_DIR)*.o
+
 CFLAGS = -Wall -Wextra -Werror
 
 NAME = libftprintf.a
-
-LIBFT_OBJS = libft/*.o
 
 all : $(NAME)
 
@@ -17,18 +19,17 @@ $(NAME) : $(OBJS) makelibft
 	ar rcs $(NAME) $(OBJS) $(LIBFT_OBJS)
 
 makelibft :
-	make -C libft/
-
-# %.c : %.o
-# 	gcc $(CFLAGS) -I $(INCLUDE) -c $< -o ${<:c=o}
+	make -C $(LIBFT_DIR)
 
 bonus : $(NAME)
 
 clean:
-	make -C libft/ clean
+	make -C $(LIBFT_DIR) clean
 	rm -f $(OBJS)
 
 fclean : clean
-	rm -f $(NAME) libft/libft.a
+	rm -f $(NAME) $(LIBFT_DIR)libft.a
 
 re : fclean all
+
+.PHONY: all clean fclean re
