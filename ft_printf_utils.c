@@ -224,7 +224,7 @@ void	print_nbr(t_fmt *fmt)
 		fmt->precision = fmt->precision - strlen;
 	else
 		fmt->precision = 0;
-	fmt->width = fmt->width - strlen - fmt->precision - (nbr < 0 || fmt->plus || fmt->space)
+	fmt->width = fmt->width - strlen - fmt->precision - (nbr < 0 || fmt->plus || fmt->space);
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
@@ -235,7 +235,7 @@ void	print_nbr(t_fmt *fmt)
 	if (fmt->plus && nbr >= 0 && fmt->zero)
 		fmt->output_len += write(1, "+", 1);
 	if (!fmt->minus)
-		fmt->output_len += fill(fmt->width);
+		fmt->output_len += fill(fmt->width, fillwidth);
 		// - strlen - fmt->precision - (nbr < 0 || fmt->plus), fillwidth);
 	if (nbr < 0 && !fmt->zero)
 		fmt->output_len += write(1, "-", 1);
@@ -246,7 +246,7 @@ void	print_nbr(t_fmt *fmt)
 	fmt->output_len += fill(fmt->precision, '0');
 	fmt->output_len += write(1, str, strlen);
 	if (fmt->minus)
-		fmt->output_len += fill(fmt->width);
+		fmt->output_len += fill(fmt->width, fillwidth);
 		//  - strlen - fmt->precision - (nbr < 0 || fmt->plus || fmt->space), fillwidth);
 	free(str);
 }
