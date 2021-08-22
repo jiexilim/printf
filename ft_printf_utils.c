@@ -156,6 +156,8 @@ void	print_nbr(t_fmt *fmt)
 	char	fillwidth;
 
 	nbr = va_arg(fmt->args, int);
+	if (fmt->dot && !fmt->precision && !nbr)
+		return ;
 	if (nbr < -2147483648 || nbr > 2147483647)
 		nbr = 0;
 	if (nbr == -2147483648)
@@ -173,6 +175,8 @@ void	print_nbr(t_fmt *fmt)
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
+	if (fmt->dot)
+		fmt->zero = 0;
 	if (nbr < 0 && fmt->zero)
 		fmt->output_len += write(1, "-", 1);
 	if (fmt->plus && nbr >= 0 && fmt->zero)
@@ -199,6 +203,8 @@ void	print_ui(t_fmt *fmt)
 	char	*str;
 	char	fillwidth;
 
+	if (fmt->dot && !fmt->precision && !nbr)
+		return ;
 	nbr = va_arg(fmt->args, unsigned int);
 	str = itoa_base(nbr, "0123456789");
 	strlen = ft_strlen(str);
@@ -225,6 +231,8 @@ void print_hex(t_fmt *fmt, char x_type)
 	char	fillwidth;
 
 	nbr = va_arg(fmt->args, unsigned int);
+	if (fmt->dot && !fmt->precision && !nbr)
+		return ;
 	if (x_type == 'X')
 		hex_arr = itoa_base((unsigned long) nbr, "0123456789ABCDEF");
 	else
