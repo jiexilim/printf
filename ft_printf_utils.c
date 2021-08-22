@@ -238,6 +238,7 @@ void print_hex(t_fmt *fmt, char x_type)
 	fmt->output_len += write(1, hex_arr, arrlen);
 	if (fmt->minus)
 		fmt->output_len += fill(fmt->width - arrlen - numzeros - (fmt->hash * 2), fillwidth);
+	free(hex_arr);
 }
 
 void	parse(char **format, t_fmt *fmt)

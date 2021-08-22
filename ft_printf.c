@@ -29,7 +29,7 @@ int		ft_printf(const char *format, ...)
 
 // int main()
 // {
-// 	int i = ft_printf(" %u ", 0);
+// 	int i = ft_printf(" %x ", 0);
 // 	// int i = ft_printf("%s", "haha");
 // 	printf("\n");
 // 	int j = printf(" %u ",0);
