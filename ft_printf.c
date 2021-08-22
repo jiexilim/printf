@@ -27,14 +27,14 @@ int		ft_printf(const char *format, ...)
 	return (output_len);
 }
 
-int main()
-{
-	int i = ft_printf(" %u ", 0);
-	// int i = ft_printf("%s", "haha");
-	printf("\n");
-	int j = printf(" %u ",0);
-	printf("\n");
-	printf("%d\n", i);
-	printf("%d\n", j);
-	return (0);
-}
+// int main()
+// {
+// 	int i = ft_printf(" %u ", 0);
+// 	// int i = ft_printf("%s", "haha");
+// 	printf("\n");
+// 	int j = printf(" %u ",0);
+// 	printf("\n");
+// 	printf("%d\n", i);
+// 	printf("%d\n", j);
+// 	return (0);
+// }
