@@ -229,10 +229,28 @@ void	print_ui(t_fmt *fmt)
 	free(str);
 }
 
-void	outputhex_hlpr(t_fmt *fmt, char x_type, char *hex_arr, int arrlen,unsigned int nbr)
-{
-	char	fillwidth;
+// void	outputhex_hlpr(t_fmt *fmt, char x_type, char *hex_arr)
+// {
 
+// }
+
+void	print_hex(t_fmt *fmt, char x_type)
+{
+	unsigned int	nbr;
+	char			*hex_arr;
+	int				arrlen;
+	char			fillwidth;
+
+	nbr = va_arg(fmt->args, unsigned int);
+	if (x_type == 'X')
+		hex_arr = itoa_base((unsigned long) nbr, "0123456789ABCDEF");
+	else
+		hex_arr = itoa_base((unsigned long) nbr, "0123456789abcdef");
+	arrlen = ft_strlen(hex_arr);
+	if (fmt->dot && !fmt->precision && !nbr)
+		arrlen = 0;
+	if (fmt->precision > arrlen)
+		fmt->precision -= arrlen;
 	fillwidth = ' ';
 	if (!fmt->dot && fmt->zero)
 		fillwidth = '0';
@@ -246,39 +264,6 @@ void	outputhex_hlpr(t_fmt *fmt, char x_type, char *hex_arr, int arrlen,unsigned 
 	if (fmt->minus)
 		fmt->output_len += fill(fmt->width - arrlen
 				- fmt->precision - (fmt->hash * 2), fillwidth);
-}
-
-void	print_hex(t_fmt *fmt, char x_type)
-{
-	unsigned int	nbr;
-	char			*hex_arr;
-	int				arrlen;
-	// char			fillwidth;
-
-	nbr = va_arg(fmt->args, unsigned int);
-	if (x_type == 'X')
-		hex_arr = itoa_base((unsigned long) nbr, "0123456789ABCDEF");
-	else
-		hex_arr = itoa_base((unsigned long) nbr, "0123456789abcdef");
-	arrlen = ft_strlen(hex_arr);
-	if (fmt->dot && !fmt->precision && !nbr)
-		arrlen = 0;
-	if (fmt->precision > arrlen)
-		fmt->precision -= arrlen;
-	// fillwidth = ' ';
-	// if (!fmt->dot && fmt->zero)
-	// 	fillwidth = '0';
-	outputhex_hlpr(fmt, x_type, hex_arr, arrlen, nbr);
-	// if (!fmt->minus)
-	// 	fmt->output_len += fill(fmt->width - arrlen
-	// 			- fmt->precision - (fmt->hash * 2), fillwidth);
-	// if (fmt->hash && nbr)
-	// 	fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
-	// fmt->output_len += fill(fmt->precision, '0');
-	// fmt->output_len += write(1, hex_arr, arrlen);
-	// if (fmt->minus)
-	// 	fmt->output_len += fill(fmt->width - arrlen
-	// 			- fmt->precision - (fmt->hash * 2), fillwidth);
 	free(hex_arr);
 }
 
