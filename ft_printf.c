@@ -28,18 +28,11 @@ int		ft_printf(const char *format, ...)
 
 // int main()
 // {
-// 	char *s_hidden = "hi low\0don't print me lol\0";
-// 	ft_printf("%09s", s_hidden);
+// 	ft_printf("%08.3i", 8375);
+	
 // 	printf("\n");
-// 	printf("%09s", s_hidden);
+// 	ft_printf("%08.3i", -8375);
+	
 // 	printf("\n");
-// 	// ft_printf("%5");
-// 	// printf("\n");
-// 	// ft_printf("%05");
-// 	// printf("\n");
-// 	// ft_printf("%-05");
-// 	// printf("\n");
-// 	// ft_printf("%-5");
-// 	// printf("\n");
 // 	return (0);
 // }
