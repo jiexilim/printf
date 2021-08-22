@@ -229,7 +229,7 @@ void	print_ui(t_fmt *fmt)
 	free(str);
 }
 
-void	outputhex_hlpr(t_fmt *fmt, char x_type, char *hex_arr, int arrlen)
+void	outputhex_hlpr(t_fmt *fmt, char x_type, char *hex_arr, int arrlen,unsigned int nbr)
 {
 	char	fillwidth;
 
@@ -239,7 +239,7 @@ void	outputhex_hlpr(t_fmt *fmt, char x_type, char *hex_arr, int arrlen)
 	if (!fmt->minus)
 		fmt->output_len += fill(fmt->width - arrlen
 				- fmt->precision - (fmt->hash * 2), fillwidth);
-	if (fmt->hash && *hex_arr)
+	if (fmt->hash && nbr)
 		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
 	fmt->output_len += fill(fmt->precision, '0');
 	fmt->output_len += write(1, hex_arr, arrlen);
@@ -268,7 +268,7 @@ void	print_hex(t_fmt *fmt, char x_type)
 	// fillwidth = ' ';
 	// if (!fmt->dot && fmt->zero)
 	// 	fillwidth = '0';
-	outputhex_hlpr(fmt, x_type, hex_arr, arrlen);
+	outputhex_hlpr(fmt, x_type, hex_arr, arrlen, nbr);
 	// if (!fmt->minus)
 	// 	fmt->output_len += fill(fmt->width - arrlen
 	// 			- fmt->precision - (fmt->hash * 2), fillwidth);
