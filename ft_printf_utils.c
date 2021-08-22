@@ -229,12 +229,28 @@ void	print_ui(t_fmt *fmt)
 	free(str);
 }
 
+void	outputhex(t_fmt *fmt, char *hex_arr, int arrlen, char x_type)
+{
+	char	fillwidth;
+
+	fillwidth = ' ';
+	if (!fmt->dot && fmt->zero)
+		fillwidth = '0';
+	if (!fmt->minus)
+		fmt->output_len += fill(fmt->width, fillwidth);
+	if (fmt->hash && hex_arr[0] != '0');
+		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
+	fmt->output_len += fill(fmt->precision, '0');
+	fmt->output_len += write(1, hex_arr, arrlen);
+	if (fmt->minus)
+		fmt->output_len += fill(fmt->width, fillwidth);
+}
+
 void	print_hex(t_fmt *fmt, char x_type)
 {
 	unsigned int	nbr;
 	char			*hex_arr;
 	int				arrlen;
-	char			fillwidth;
 
 	nbr = va_arg(fmt->args, unsigned int);
 	if (x_type == 'X')
@@ -252,17 +268,18 @@ void	print_hex(t_fmt *fmt, char x_type)
 		fmt->width = fmt->width - arrlen - fmt->precision - (fmt->hash * 2);
 	else
 		fmt->width = 0;
-	fillwidth = ' ';
-	if (!fmt->dot && fmt->zero)
-		fillwidth = '0';
-	if (!fmt->minus)
-		fmt->output_len += fill(fmt->width, fillwidth);
-	if (fmt->hash && nbr)
-		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
-	fmt->output_len += fill(fmt->precision, '0');
-	fmt->output_len += write(1, hex_arr, arrlen);
-	if (fmt->minus)
-		fmt->output_len += fill(fmt->width, fillwidth);
+	outputhex(fmt, hex_arr, arrlen, x_type);
+	// fillwidth = ' ';
+	// if (!fmt->dot && fmt->zero)
+	// 	fillwidth = '0';
+	// if (!fmt->minus)
+	// 	fmt->output_len += fill(fmt->width, fillwidth);
+	// if (fmt->hash && nbr)
+	// 	fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
+	// fmt->output_len += fill(fmt->precision, '0');
+	// fmt->output_len += write(1, hex_arr, arrlen);
+	// if (fmt->minus)
+	// 	fmt->output_len += fill(fmt->width, fillwidth);
 	free(hex_arr);
 }
 
