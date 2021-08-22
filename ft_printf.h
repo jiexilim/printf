@@ -2,6 +2,7 @@
 # define FT_PRINTF_H
 #include "libft/libft.h"
 # include <stdarg.h>
+# include <stdio.h>
 # include <unistd.h>
 
 # define FD_STDOUT 1

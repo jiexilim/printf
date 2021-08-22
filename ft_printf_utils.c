@@ -154,15 +154,17 @@ void	print_ptr(t_fmt *fmt)
 
 void	print_nbr(t_fmt *fmt)
 {
-	int		nbr, strlen, numzeros;
+	long		nbr, strlen, numzeros;
 	char	*str;
 	char	fillwidth;
 
-	nbr = va_arg(fmt->args, int);
+	nbr = va_arg(fmt->args, long);
+	if (nbr < -2147483648 || nbr > 2147483647)
+		nbr = 0;
 	if (nbr < 0)
-		str = ft_itoa(-nbr);
+		str = itoa_base(-nbr, "0123456789");
 	else
-		str = ft_itoa(nbr);
+		str = itoa_base(nbr, "0123456789");	
 	strlen = ft_strlen(str);
 	numzeros = 0;
 	if (fmt->precision > strlen)

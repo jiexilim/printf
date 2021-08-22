@@ -1,6 +1,6 @@
 #include "libft/libft.h"
 #include "ft_printf.h"
-# include <stdio.h>
+
 
 int		ft_printf(const char *format, ...)
 {
@@ -9,6 +9,7 @@ int		ft_printf(const char *format, ...)
 	
 	fmt = malloc(sizeof(t_fmt));
 	va_start(fmt->args, format);
+	fmt->output_len = 0;
 	while (*format)
 	{
 		if (*format == '%')
@@ -28,9 +29,13 @@ int		ft_printf(const char *format, ...)
 
 // int main()
 // {
-// 	ft_printf("%d", -1);
+// 	// " %d %d %d %d %d %d %d", INT_MAX, INT_MIN, LONG_MAX, LONG_MIN, ULONG_MAX, 0, -42
+// 	int i = ft_printf(" %d ", 0);
+// 	// int i = ft_printf("%s", "haha");
 // 	printf("\n");
-// 	printf("%p", 0);
+// 	int j = printf(" %d ", 0);
 // 	printf("\n");
+// 	printf("%d\n", i);
+// 	printf("%d\n", j);
 // 	return (0);
 // }
