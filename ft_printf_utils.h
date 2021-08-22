@@ -1,6 +1,6 @@
 #ifndef FT_PRINTF_UTILS_H
 # define FT_PRINTF_UTILS_H
-#include "libft/libft.h"
+# include "libft/libft.h"
 # include <stdarg.h>
 # include <unistd.h>
 
@@ -17,4 +17,3 @@ void	print_pct(t_fmt *fmt);
 void	parse(char **format, t_fmt *fmt);
 
 #endif
-

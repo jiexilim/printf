@@ -2,7 +2,7 @@
 # define FT_PRINTF_H
 # include <stdarg.h>
 
-typedef struct	s_fmt
+typedef struct s_fmt
 {
 	va_list	args;
 	int		output_len;
