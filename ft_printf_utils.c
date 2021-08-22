@@ -175,6 +175,8 @@ void	print_nbr(t_fmt *fmt)
 		str = ft_itoa(nbr);
 	strlen = ft_strlen(str);
 	numzeros = 0;
+	if ((fmt->dot && !fmt->precision && !nbr))
+		strlen = 0;
 	if (fmt->precision > strlen)
 		numzeros = fmt->precision - strlen;
 	// else if (fmt->zero && fmt->width > strlen)
@@ -215,6 +217,8 @@ void	print_ui(t_fmt *fmt)
 	nbr = va_arg(fmt->args, unsigned int);
 	str = itoa_base(nbr, "0123456789");
 	strlen = ft_strlen(str);
+	if ((fmt->dot && !fmt->precision && !nbr))
+		strlen = 0;
 	numzeros = 0;
 	if (fmt->precision > strlen)
 		numzeros = fmt->precision - strlen;
@@ -244,6 +248,8 @@ void print_hex(t_fmt *fmt, char x_type)
 	else
 		hex_arr = itoa_base((unsigned long) nbr, "0123456789abcdef");
 	arrlen = ft_strlen(hex_arr);
+	if ((fmt->dot && !fmt->precision && !nbr))
+		arrlen = 0;
 	numzeros = 0;
 	if (fmt->precision > arrlen)
 		numzeros = fmt->precision - arrlen;

@@ -28,11 +28,15 @@ int		ft_printf(const char *format, ...)
 
 // int main()
 // {
-// 	ft_printf("%p", NULL);
-//     printf("\n");
-//     ft_printf("%5p", NULL);
-//        printf("\n");
-//       ft_printf("%2p", NULL);
-//      printf("\n");
+// 	int i = ft_printf("%.i", 0);
+//        printf("a\n");
+//        int y = ft_printf("%5.0i", 0);
+//        printf("a\n");
+//        ft_printf("%5.i", 0);
+//       printf("a\n");
+//       ft_printf("%-5.0i", 0);
+//       printf("a\n");
+// 	  printf("%d\n", i);
+// 	  printf("%d\n", y);
 // 	return (0);
 // }
