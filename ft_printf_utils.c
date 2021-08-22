@@ -161,7 +161,7 @@ void	print_nbr(t_fmt *fmt)
 	nbr = va_arg(fmt->args, long);
 	if ((int) nbr < -2147483648 || (int) nbr > 2147483647)
 		nbr = 0;
-	else if ((int) nbr == -2147483648)
+	if ((int) nbr == -2147483648)
 		str = itoa_base(-nbr, "0123456789");
 	else if (nbr < 0)
 		str = ft_itoa(-nbr);
