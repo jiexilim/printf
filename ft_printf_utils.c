@@ -203,9 +203,10 @@ void	print_ui(t_fmt *fmt)
 	char	*str;
 	char	fillwidth;
 
+	
+	nbr = va_arg(fmt->args, unsigned int);
 	if (fmt->dot && !fmt->precision && !nbr)
 		return ;
-	nbr = va_arg(fmt->args, unsigned int);
 	str = itoa_base(nbr, "0123456789");
 	strlen = ft_strlen(str);
 	numzeros = 0;
