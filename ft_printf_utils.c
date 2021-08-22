@@ -78,9 +78,10 @@ void	print_str(t_fmt *fmt)
 		str = "(null)";
 	strlen = ft_strlen(str);
 	if (fmt->precision > strlen || !fmt->dot)
-		fmt->width = fmt->width - strlen;
+		numspaces = strlen;
 	else
-		fmt->width = fmt->width - fmt->precision;
+		numspaces = fmt->precision;
+	fmt->width = fmt->width - numspaces;
 	if (!fmt->minus && !fmt->zero)
 		fmt->output_len += fill(fmt->width, ' ');
 	if (!fmt->minus && fmt->zero)
