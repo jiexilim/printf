@@ -238,7 +238,7 @@ void	outputhex(t_fmt *fmt, char *hex_arr, int arrlen, char x_type)
 		fillwidth = '0';
 	if (!fmt->minus)
 		fmt->output_len += fill(fmt->width, fillwidth);
-	if (fmt->hash && hex_arr[0] != '0');
+	if (fmt->hash && hex_arr[0] != '0')
 		fmt->output_len += write(1, "0", 1) + write(1, &x_type, 1);
 	fmt->output_len += fill(fmt->precision, '0');
 	fmt->output_len += write(1, hex_arr, arrlen);
