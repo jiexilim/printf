@@ -136,11 +136,11 @@ void	print_ptr(t_fmt *fmt)
 	int		ptrlen;
 
 	str = va_arg(fmt->args, char *);
-	if (!str)
-	{
-		fmt->output_len += write(1, "(nil)", 5);
-		return ;
-	}
+	// if (!str)
+	// {
+	// 	fmt->output_len += write(1, "(nil)", 5);
+	// 	return ;
+	// }
 	ptr = itoa_base((unsigned long) str, "0123456789abcdef");
 	ptrlen = ft_strlen(ptr);
 	if (fmt->width > ptrlen && !fmt->minus)
