@@ -26,11 +26,11 @@ int		ft_printf(const char *format, ...)
 	return (output_len);
 }
 
-int main()
-{
-	ft_printf("%.x", 0);
-      printf("\n");
-      ft_printf("%.0x", 0);
-     printf("\n");
-	return (0);
-}
+// int main()
+// {
+// 	ft_printf("%.x", 0);
+//       printf("\n");
+//       ft_printf("%.0x", 0);
+//      printf("\n");
+// 	return (0);
+// }
