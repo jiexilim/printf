@@ -245,6 +245,17 @@ void print_hex(t_fmt *fmt, char x_type)
 	free(hex_arr);
 }
 
+void	print_hash(t_fmt *fmt)
+{
+	if (!fmt->minus && fmt->zero)
+		fmt->output_len += fill(fmt->width - 1, '0');
+	if (!fmt->minus && !fmt->zero)
+		fmt->output_len += fill(fmt->width - 1, ' ');
+	fmt->output_len += write(1, "%", 1);
+	if (fmt->minus)
+		fmt->output_len += fill(fmt->width - 1, ' ');
+}
+
 void	parse(char **format, t_fmt *fmt)
 {
 	while (*++(*format) && is_specifier(**format))
@@ -258,13 +269,13 @@ void	parse(char **format, t_fmt *fmt)
 	else if (**format == 'd' || **format == 'i')
 		print_nbr(fmt);
 	else if (**format == 'u')
-		return print_ui(fmt);
+		print_ui(fmt);
 	else if (**format == 'x')
-		return print_hex(fmt, 'x');
+		print_hex(fmt, 'x');
 	else if (**format == 'X')
-		return print_hex(fmt,'X');
+		print_hex(fmt,'X');
 	else if (**format == '%')
-		fmt->output_len += write(1, "%", 1);
+		print_hash(fmt);
 	return ;
 }
 

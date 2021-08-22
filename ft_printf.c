@@ -29,12 +29,20 @@ int		ft_printf(const char *format, ...)
 
 // int main()
 // {
+// 	ft_printf("%5%");
+// 	printf("\n");
+// 	ft_printf("%-5%");
+// 	printf("\n");
+// 	ft_printf("%05%");
+// 	printf("\n");
+// 	ft_printf("%-05%");
+// 	printf("\n");
 
-// 	int i = ft_printf("% d", 0);
-// 	printf("\n");
-// 	int j = printf("% d", 0);
-// 	printf("\n");
-// 	printf("%d\n", i);
-// 	printf("%d\n", j);
+// 	// int i = ft_printf("%-5%");
+// 	// printf("\n");
+// 	// int j = printf("%-5%");
+// 	// printf("\n");
+// 	// printf("%d\n", i);
+// 	// printf("%d\n", j);
 // 	return (0);
 // }
