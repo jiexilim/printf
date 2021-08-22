@@ -112,7 +112,6 @@ char	*itoa_base(unsigned long long nbr, char *base)
 	int		radix;
 	char	*arr_base;
 	size_t	size;
-
 	radix = ft_strlen(base);
 	size = arr_size(nbr, radix);
 	arr_base = malloc(size + 1);
@@ -154,15 +153,15 @@ void	print_ptr(t_fmt *fmt)
 
 void	print_nbr(t_fmt *fmt)
 {
-	long		nbr, strlen, numzeros;
+	int		nbr, strlen, numzeros;
 	char	*str;
 	char	fillwidth;
 
-	nbr = va_arg(fmt->args, long);
-	if ((int) nbr < -2147483648 || (int) nbr > 2147483647)
+	nbr = va_arg(fmt->args, int);
+	if (nbr < -2147483648 || nbr > 2147483647)
 		nbr = 0;
-	if ((int) nbr == -2147483648)
-		str = itoa_base(-nbr, "0123456789");
+	if (nbr == -2147483648)
+		str = itoa_base((long) nbr * -1, "0123456789");
 	else if (nbr < 0)
 		str = ft_itoa(-nbr);
 	else
