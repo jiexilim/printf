@@ -82,9 +82,9 @@ void	print_str(t_fmt *fmt)
 		numspaces = strlen;
 	else
 		numspaces = fmt->precision;
-	if (!fmt->minus && !ft->zero)
+	if (!fmt->minus && !fmt->zero)
 		fmt->output_len += fill(fmt->width - numspaces, ' ');
-	if (!fmt->minus && ft->zero)
+	if (!fmt->minus && fmt->zero)
 		fmt->output_len += fill(fmt->width - numspaces, '0');
 	fmt->output_len += write(1, str, numspaces);
 	if (fmt->minus)
