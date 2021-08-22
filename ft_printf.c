@@ -1,5 +1,6 @@
 #include "libft/libft.h"
 #include "ft_printf.h"
+# include <stdio.h>
 
 int		ft_printf(const char *format, ...)
 {
@@ -27,6 +28,9 @@ int		ft_printf(const char *format, ...)
 
 // int main()
 // {
-// 	ft_printf("%d", 3);
+// 	ft_printf("%d", -1);
+// 	printf("\n");
+// 	printf("%p", 0);
+// 	printf("\n");
 // 	return (0);
 // }
