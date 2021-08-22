@@ -76,12 +76,7 @@ void	print_str(t_fmt *fmt)
 	
 	str = va_arg(fmt->args, char *);
 	if (!str)
-	{
-		write(1, "", 1);
-		return ;
-		// if (fmt->precision < 6)
-		// 	fmt->precision = 0;
-	}
+		str = "(null)";
 	strlen = ft_strlen(str);
 	if (fmt->precision > strlen || !fmt->dot)
 		numspaces = strlen;
@@ -261,9 +256,11 @@ void	parse(char **format, t_fmt *fmt)
 {
 	while (*++(*format) && is_specifier(**format))
 		parse_specifier(**format, fmt);
-	if (**format == 'c')
+	if (!(**format))
+		return ;
+	else if (**format == 'c')
 		print_char(fmt);
-	if (**format == 's')
+	else if (**format == 's')
 		print_str(fmt);
 	else if (**format == 'p')
 		print_ptr(fmt);
@@ -277,6 +274,6 @@ void	parse(char **format, t_fmt *fmt)
 		print_hex(fmt,'X');
 	else if (**format == '%')
 		print_hash(fmt);
-	return ;
+	(*format)++;
 }
 

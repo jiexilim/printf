@@ -16,7 +16,6 @@ int		ft_printf(const char *format, ...)
 		{
 			reset(fmt);
 			parse((char **) &format, fmt);
-			format++;
 			continue;
 		}
 		fmt->output_len += write(1, format++, 1);
@@ -31,13 +30,13 @@ int		ft_printf(const char *format, ...)
 // {
 // 	ft_printf("%");
 // 	printf("\n");
-// 	ft_printf("%5");
-// 	printf("\n");
-// 	ft_printf("%05");
-// 	printf("\n");
-// 	ft_printf("%-05");
-// 	printf("\n");
-// 	ft_printf("%-5");
-// 	printf("\n");
+// 	// ft_printf("%5");
+// 	// printf("\n");
+// 	// ft_printf("%05");
+// 	// printf("\n");
+// 	// ft_printf("%-05");
+// 	// printf("\n");
+// 	// ft_printf("%-5");
+// 	// printf("\n");
 // 	return (0);
 // }
